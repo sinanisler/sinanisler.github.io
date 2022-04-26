@@ -1,2 +1,2 @@
 # sinanisler.github.io
-sinanisler.github.io publish testing
+sinanisler.github.io
