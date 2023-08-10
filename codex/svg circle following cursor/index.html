@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Circle Follow Cursor</title>
+</head><body>
+
+
+
+<div id="svg-container">
+    <svg width="52" height="52" id="circle">
+        <circle cx="26" cy="26" r="24" stroke="blue" stroke-width="1" fill="none" />
+    </svg>
+    </div>
+
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+
+<style>
+    #svg-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none; /* Allow mouse events to pass through the SVG */
+    }
+    
+    #circle {
+      transition: transform 0.3s; /* Add a transition for the transform property */
+    }
+
+    a {
+      display: block;
+      margin: 20px;
+      font-size: 20px;
+    }
+
+</style>
+<script>
+
+const svgContainer = document.getElementById('svg-container');
+    const circle = document.getElementById('circle');
+    const delay = 50;
+
+    document.addEventListener('mousemove', (event) => {
+      setTimeout(() => {
+        const x = event.clientX;
+        const y = event.clientY;
+        
+        svgContainer.style.left = (x - 30) + 'px';
+        svgContainer.style.top = (y - 30) + 'px';
+      }, delay);
+    });
+
+    // Add an event listener to all anchor tags on the page
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('mouseover', () => {
+        circle.style.transform = 'scale(1.5)'; // Grow the circle by 1.5 times
+      });
+
+      link.addEventListener('mouseout', () => {
+        circle.style.transform = 'scale(1)'; // Reset the circle to its original size
+      });
+    });
+
+</script>
+</body></html>
