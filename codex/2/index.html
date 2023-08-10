@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realtime Search Input Field html css js</title>
+</head>
+<body>
+
+    <input type="text" id="searchInput" placeholder="Geben Sie einen Ort ein...">
+    <ul id="searchResults"></ul>
+
+    
+<script>
+
+// Sample data array to simulate search results
+const data = [
+  {
+    name: "Lorem Ipsum 1",
+    link: "https://example.com/1",
+    address: "123 Lorem St, Ipsum City"
+  },
+  {
+    name: "Lorem Ipsum 2",
+    link: "https://example.com/2",
+    address: "456 Ipsum Ave, Loremville"
+  },
+  {
+    name: "Lorem Ipsum 3",
+    link: "https://example.com/3",
+    address: "789 Dolor Rd, Sit Amet Town"
+  },
+  {
+    name: "Lorem Ipsum 4",
+    link: "https://example.com/4",
+    address: "101 Lorem Ipsum Blvd, Consectetur City"
+  },
+  {
+    name: "Lorem Ipsum 5",
+    link: "https://example.com/5",
+    address: "555 Amet St, Dolorville"
+  },
+  {
+    name: "Lorem Ipsum 6",
+    link: "https://example.com/6",
+    address: "777 Ipsum Rd, Lorem Ipsumville"
+  },
+  {
+    name: "Lorem Ipsum 7",
+    link: "https://example.com/7",
+    address: "999 Sit Amet Blvd, Dolor City"
+  },
+  {
+    name: "Lorem Ipsum 8",
+    link: "https://example.com/8",
+    address: "888 Consectetur St, Ametville"
+  },
+  {
+    name: "Lorem Ipsum 9",
+    link: "https://example.com/9",
+    address: "222 Dolor Ave, Lorem Town"
+  },
+  {
+    name: "Lorem Ipsum 10",
+    link: "https://example.com/10",
+    address: "444 Ipsum Rd, Sit City"
+  }
+];
+
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+
+// Function to update the search results
+function updateResults() {
+  const query = searchInput.value.toLowerCase();
+  const queryWords = query.split(" ").filter(word => word.trim() !== "");
+
+  const matchingResults = data.filter(item => {
+    return queryWords.every(word => 
+                            item.name.toLowerCase().includes(word) || 
+                            item.address.toLowerCase().includes(word)
+                           );
+  }).slice(-5);
+
+  // Clear previous results
+  searchResults.innerHTML = "";
+
+  // Display new results
+  for (const result of matchingResults) {
+    const li = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = result.link;
+    link.textContent = result.name;
+
+    // Add address information as a span element
+    const addressSpan = document.createElement("span");
+    addressSpan.textContent = result.address;
+    li.appendChild(link);
+    li.appendChild(addressSpan);
+
+    searchResults.appendChild(li);
+  }
+}
+
+// Function to show the latest 10 results when the input field is clicked
+function showLatestResults() {
+  // Call the updateResults function without any input value
+  updateResults();
+}
+
+// Add event listeners to the search input for input, blur, and click events
+searchInput.addEventListener("input", updateResults);
+
+searchInput.addEventListener("blur", () => {
+  // Check if the input field is empty before removing the results
+  if (searchInput.value.trim() === '') {
+    searchResults.innerHTML = "";
+  }
+});
+
+searchInput.addEventListener("click", showLatestResults);
+
+// Add an event listener to the search results list to prevent the input from losing focus
+searchResults.addEventListener("mousedown", (event) => {
+  // Prevent the default blur behavior when clicking on the search results list
+  event.preventDefault();
+});
+
+</script>
+</body>
+</html>
